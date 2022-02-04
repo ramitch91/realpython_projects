@@ -4,8 +4,8 @@ import os
 cwd = os.getcwd()
 os.chdir(cwd + "/Data Collection and Storage")
 
-with open("quote_wrapping.csv") as csv_file:
-    csv_reader = csv.DictReader(csv_file, delimiter=",", quotechar='"')
+with open("escape_char.csv") as csv_file:
+    csv_reader = csv.DictReader(csv_file, delimiter=",", escapechar="|")
     line_count = 0
     for row in csv_reader:
         if line_count == 0:
