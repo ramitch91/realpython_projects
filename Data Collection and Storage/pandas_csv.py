@@ -1,5 +1,9 @@
-import pandas as pd
+""" Script to show how to read and write csv files with Pandas."""
+
 import os
+
+import pandas as pd
+
 
 cwd = os.getcwd()
 os.chdir(cwd + "/Data Collection and Storage")
