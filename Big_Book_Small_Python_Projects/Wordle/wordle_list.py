@@ -7,7 +7,7 @@ also allow you to add words to the list and remove words from the list.
 import csv
 
 
-def get_lingo_word_list():
+def get_wordle_word_list():
     wordle_list = []
     with open("lingolist.csv", "r", encoding="utf-8") as file_in:
         for line in file_in:

@@ -14,29 +14,23 @@ it would be in the correct location.
 If you guess a letter that is correct and in the correct location,
 it will be placed in the word and shown in a green color. If you
 guess a correct letter but the letter is in the wrong place,
-it will be shown in the place in which you guessed it but it will
+it will be shown in the place in which you guessed it, but it will
 be shown in a red color. Any of the letters that you guess are
 incorrect, a blank or '_' will be shown in that location.
 
 """
-import os
-
-cwd = os.getcwd()
-print(cwd)
-os.chdir(cwd + "/Big_Book_Small_Python_Projects/Wordle")
-
 import wordle_list
 import random
 import colorama
 from colorama import Fore
 
 colorama.init(autoreset=True)
-MAX_GUESSES = 10
+MAX_GUESSES = 6
 
 
 def choose_a_word_from_wordle_list():
     word_list = wordle_list.get_wordle_word_list()
-    wordle_word = random.choice(wordle_list)
+    wordle_word = random.choice(word_list)
     return wordle_word
 
 
@@ -61,24 +55,23 @@ def check_response(response, wordle_word):
 
 
 def check_word(word_to_check, wordle_word):
-
     for i in range(5):
         if word_to_check[i] == wordle_word[i]:
-            print(f"{Fore.Green}{word_to_check[i]}, end=''")
+            print(f"{Fore.GREEN}{word_to_check[i]}, end=''")
         elif word_to_check[i] in wordle_word:
-            print(f"{Fore.Red}{word_to_check[i]}, end=''")
+            print(f"{Fore.YELLOW}{word_to_check[i]}, end=''")
         else:
-            print(f"{Fore.Yellow}{word_to_check[i]}, end=''")
+            print(f"{Fore.RED}{word_to_check[i]}, end=''")
 
     print()
 
 
 def print_header():
     print()
-    print(f"{Fore.Blue}---------------------------------")
-    print(f"{Fore.Blue}      Welcome to wordle")
-    print(f"{Fore.Blue}  Written by Ricky Mitchell")
-    print(f"{Fore.Blue}---------------------------------")
+    print(f"{Fore.BLUE}---------------------------------")
+    print(f"{Fore.BLUE}      Welcome to wordle")
+    print(f"{Fore.BLUE}  Written by Ricky Mitchell")
+    print(f"{Fore.BLUE}---------------------------------")
     print()
 
 
@@ -87,7 +80,7 @@ def print_instructions():
 
 
 def play_game(wordle_word):
-    print(f"Your word is {Fore.Green}{wordle_word[0]}{Fore.Yellow}____")
+    print(f"Your word is {Fore.GREEN}{wordle_word[0]}{Fore.BLUE}____")
     count = 0
     while count in range(MAX_GUESSES):
         word_guess = input("Enter your word guess: ").lower()
@@ -98,10 +91,9 @@ def main():
     print_header()
     print_instructions()
     wordle_word = choose_a_word_from_wordle_list()
-    print(f"{Fore.Green}{wordle_word[0]}{Fore.Yellow}____")
+    print(f"{Fore.GREEN}{wordle_word[0]}{Fore.BLUE}____")
     while True:
         play_game(wordle_word)
-
 
 # Ask the user to guess a word
 # Convert the response to lowercase
