@@ -1,10 +1,12 @@
 from tkinter import *
 
 root = Tk()
-root.title("Simple Caculator")
+root.title("Simple Calculator")
 
 e = Entry(root, width=35, borderwidth=5)
 e.grid(row=0, columnspan=3, padx=10, pady=10)
+f_num = 0
+operation = ""
 
 
 def enter_number(number):
@@ -17,17 +19,32 @@ def clear_button():
     e.delete(0, END)
 
 
-def add_button():
-   first_number = e.get()
-   global f_num
-   f_num = int(first_number)
-   e.delete(0, END)
+def operation_button(op_type: str):
+    global f_num
+    global operation
+    first_number = float(e.get())
+    f_num = first_number
+    e.delete(0, END)
+    operation = op_type
 
 
 def equal_button():
-    second_number = e.get()
-    e.delete(0, END)
-    e.insert(0, f_num + int(second_number))
+    if e.get() == "":
+        e.insert(0, "You must choose an operation type")
+    else:
+        second_number = float(e.get())
+        e.delete(0, END)
+        if operation == "add":
+            e.insert(0, f_num + second_number)
+        elif operation == "subtract":
+            e.insert(0, f_num - second_number)
+        elif operation == "multiply":
+            e.insert(0, f_num * second_number)
+        elif operation == "divide":
+            if second_number == 0:
+                e.insert(0, "You cannot divide by 0")
+            else:
+                e.insert(0, f_num / second_number)
 
 
 # define buttons
@@ -41,9 +58,13 @@ button_7 = Button(root, text="7", padx=40, pady=20, command=lambda: enter_number
 button_8 = Button(root, text="8", padx=40, pady=20, command=lambda: enter_number(8))
 button_9 = Button(root, text="9", padx=40, pady=20, command=lambda: enter_number(9))
 button_0 = Button(root, text="0", padx=40, pady=20, command=lambda: enter_number(0))
-button_add = Button(root, text="+", padx=39, pady=20, command=add_button)
-button_equal = Button(root, text="=", padx=91, pady=20, command=equal_button)
-button_clear = Button(root, text="Clear", padx=79, pady=20, command=clear_button)
+button_decimal = Button(root, text=".", padx=41, pady=20, command=lambda: enter_number('.'))
+button_add = Button(root, text="+", padx=39, pady=20, command=lambda: operation_button("add"))
+button_equal = Button(root, text="=", padx=90, pady=20, command=equal_button)
+button_clear = Button(root, text="C", padx=39, pady=20, command=clear_button)
+button_minus = Button(root, text="-", padx=41, pady=20, command=lambda: operation_button("subtract"))
+button_multiply = Button(root, text="*", padx=40, pady=20, command=lambda: operation_button("multiply"))
+button_divide = Button(root, text="/", padx=40, pady=20, command=lambda: operation_button("divide"))
 
 # put the buttons on the screen
 button_1.grid(row=3, column=0)
@@ -58,12 +79,15 @@ button_7.grid(row=1, column=0)
 button_8.grid(row=1, column=1)
 button_9.grid(row=1, column=2)
 
-button_0.grid(row=4, column=0)
-button_add.grid(row=5, column=0)
-button_equal.grid(row=5, column=1, columnspan=2)
-button_clear.grid(row=4, column=1, columnspan=2)
+button_add.grid(row=4, column=0)
+button_0.grid(row=4, column=1)
+button_decimal.grid(row=4, column=2)
 
+button_minus.grid(row=5, column=0)
+button_multiply.grid(row=5, column=1)
+button_divide.grid(row=5, column=2)
+
+button_clear.grid(row=6, column=0)
+button_equal.grid(row=6, column=1, columnspan=2)
 
 root.mainloop()
-
-
