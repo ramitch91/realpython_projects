@@ -9,7 +9,7 @@ import csv
 
 def get_wordle_word_list():
     wordle_list = []
-    with open("lingolist.csv", "r", encoding="utf-8") as file_in:
+    with open("wordle_list.csv", "r", encoding="utf-8") as file_in:
         for line in file_in:
             word = line[:5]
             wordle_list.append(word)

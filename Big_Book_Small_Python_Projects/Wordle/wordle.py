@@ -43,11 +43,6 @@ def check_response(response, wordle_word):
             "Enter new 5 letter word to delete from the wordle list: "
         ).lower()
         wordle_list.remove_word_from_wordle_list(word_to_remove)
-    elif response == "remove":
-        word_to_remove = input(
-            "Enter new 5 letter word to remove from the wordle list: "
-        ).lower()
-        wordle_list.remove_word_from_wordle_list(word_to_remove)
     elif len(response) != 5:
         print("You must enter a 5 letter word")
     else:
@@ -57,11 +52,11 @@ def check_response(response, wordle_word):
 def check_word(word_to_check, wordle_word):
     for i in range(5):
         if word_to_check[i] == wordle_word[i]:
-            print(f"{Fore.GREEN}{word_to_check[i]}, end=''")
+            print(f"{Fore.GREEN}{word_to_check[i]}", end='')
         elif word_to_check[i] in wordle_word:
-            print(f"{Fore.YELLOW}{word_to_check[i]}, end=''")
+            print(f"{Fore.YELLOW}{word_to_check[i]}", end='')
         else:
-            print(f"{Fore.RED}{word_to_check[i]}, end=''")
+            print(f"{Fore.RED}{word_to_check[i]}", end='')
 
     print()
 
@@ -80,20 +75,32 @@ def print_instructions():
 
 
 def play_game(wordle_word):
-    print(f"Your word is {Fore.GREEN}{wordle_word[0]}{Fore.BLUE}____")
+    print(f"Your word is {Fore.BLUE}_____")
     count = 0
     while count in range(MAX_GUESSES):
         word_guess = input("Enter your word guess: ").lower()
         check_response(word_guess, wordle_word)
+        if word_guess == wordle_word:
+            print(f"Congratulations, you guessed the word in {count + 1} tries!")
+            break
+        elif count == 5:
+            print(f"Sorry, the word was {wordle_word.upper()}. Better luck next time")
+            break
+        else:
+            count += 1
 
 
 def main():
     print_header()
     print_instructions()
     wordle_word = choose_a_word_from_wordle_list()
-    print(f"{Fore.GREEN}{wordle_word[0]}{Fore.BLUE}____")
     while True:
         play_game(wordle_word)
+        answer = input("Would you like to play again? ").lower()
+        if answer[0] == 'y':
+            continue
+        else:
+            break
 
 # Ask the user to guess a word
 # Convert the response to lowercase
@@ -104,3 +111,7 @@ def main():
 # the color of the letter to red.
 # Replace the '_' spaces with the correct letters in their respective
 # colors
+
+
+if __name__ == '__main__':
+    main()
