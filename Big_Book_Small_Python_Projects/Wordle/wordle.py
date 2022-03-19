@@ -35,13 +35,13 @@ def choose_a_word_from_wordle_list():
 
 
 def check_response(response, wordle_word):
-    if response == "add":
+    if response == 'quit' or response == 'exit':
+        exit(0)
+    elif response == "add":
         word_to_add = input("Enter new 5 letter word to add to wordle list: ").lower()
         wordle_list.add_word_to_wordle_list(word_to_add)
     elif response == "delete":
-        word_to_remove = input(
-            "Enter new 5 letter word to delete from the wordle list: "
-        ).lower()
+        word_to_remove = input("Enter new 5 letter word to delete from the wordle list: ").lower()
         wordle_list.remove_word_from_wordle_list(word_to_remove)
     elif len(response) != 5:
         print("You must enter a 5 letter word")
@@ -52,11 +52,11 @@ def check_response(response, wordle_word):
 def check_word(word_to_check, wordle_word):
     for i in range(5):
         if word_to_check[i] == wordle_word[i]:
-            print(f"{Fore.GREEN}{word_to_check[i]}", end='')
+            print(f"{Fore.GREEN}{word_to_check[i]}", end=' ')
         elif word_to_check[i] in wordle_word:
-            print(f"{Fore.YELLOW}{word_to_check[i]}", end='')
+            print(f"{Fore.YELLOW}{word_to_check[i]}", end=' ')
         else:
-            print(f"{Fore.RED}{word_to_check[i]}", end='')
+            print(f"{Fore.RED}{word_to_check[i]}", end=' ')
 
     print()
 
@@ -71,7 +71,14 @@ def print_header():
 
 
 def print_instructions():
-    pass
+    print(f'A correct letter in the correct place will show up as {Fore.GREEN}GREEN')
+    print(f'A correct letter in the wrong place will show up as {Fore.YELLOW}YELLOW')
+    print(f'An incorrect letter will show up as {Fore.RED}RED')
+    print()
+    print(f'To add a new word to the wordle list type {Fore.CYAN}add')
+    print(f'To delete a word from the wordle list type {Fore.CYAN}delete')
+    print(f'To exit the game early, type {Fore.CYAN}quit or exit')
+    print()
 
 
 def play_game(wordle_word):
@@ -79,12 +86,24 @@ def play_game(wordle_word):
     count = 0
     while count in range(MAX_GUESSES):
         word_guess = input("Enter your word guess: ").lower()
+        # if word_guess == "add":
+        #     word_to_add = input('What word would you like to add to the wordle list? ').lower()
+        #     if len(word_to_add) != 5:
+        #         print(f'{word_to_add} is not a 5-letter word.  You must enter a 5-letter word.')
+        #         break
+        #     else:
+        #         wordle_list.add_word_to_wordle_list(word_to_add)
+        #         break
+        # elif word_guess == 'delete':
+        #     word_to_delete = input('What word would you like to delete from the wordle list? ').lower()
+        #     wordle_list.remove_word_from_wordle_list(word_to_delete)
+        #
         check_response(word_guess, wordle_word)
         if word_guess == wordle_word:
             print(f"Congratulations, you guessed the word in {count + 1} tries!")
             break
         elif count == 5:
-            print(f"Sorry, the word was {wordle_word.upper()}. Better luck next time")
+            print(f"Sorry, the word was {Fore.BLUE}{wordle_word.upper()}. {Fore.WHITE}Better luck next time")
             break
         else:
             count += 1
@@ -101,16 +120,6 @@ def main():
             continue
         else:
             break
-
-# Ask the user to guess a word
-# Convert the response to lowercase
-# Compare the guess to the wordle word letter by letter
-# If the letter is correct and in the correct position, change the
-# color of that letter to green.
-# If the letter is in the word but in the incorrect position, change
-# the color of the letter to red.
-# Replace the '_' spaces with the correct letters in their respective
-# colors
 
 
 if __name__ == '__main__':
