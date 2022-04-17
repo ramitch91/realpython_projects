@@ -1,5 +1,5 @@
 """
-Sample grid training for tkgui
+Sample entry training for tkgui
 """
 
 from tkinter import *
