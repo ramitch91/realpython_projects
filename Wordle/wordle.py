@@ -19,42 +19,83 @@ be shown in a red color. Any of the letters that you guess are
 incorrect, a blank or '_' will be shown in that location.
 
 """
-import wordle_list
+
+import sys
 import random
 import colorama
 from colorama import Fore
+
+from Wordle import wordle_list
 
 colorama.init(autoreset=True)
 MAX_GUESSES = 6
 
 
-def choose_a_word_from_wordle_list():
+def choose_a_word_from_wordle_list() -> str:
+    """
+    Retrieves a single word from the wordle_list file
+
+    parameters: None
+
+    return: wordle_word as str
+    """
+
     word_list = wordle_list.get_wordle_word_list()
     wordle_word = random.choice(word_list)
     return wordle_word
 
 
-def check_response(response, wordle_word):
+def check_response(response: str, wordle_word: str) -> None:
+    """
+    Checks response from user input to determine what action to take:
+    - if response == 'quit' then exit the game
+    - if response == 'exit' then exit the game
+    - if response == 'add' then add a new word to the wordle_list file
+    - if response == 'delete' then remove a word from the wordle+_list file
+    - if response == 'remove' then remove a word from the wordle_lsit file
+    - if response is not 5 characters the let the user know that a 5 letter word must be entered
+
+    parameters:
+    response as str,
+    wordle_word as str
+
+    return: None
+    """
+
     if response == "add":
         word_to_add = input("Enter new 5 letter word to add to wordle list: ").lower()
         wordle_list.add_word_to_wordle_list(word_to_add)
-    elif response == "delete":
+    elif response in ("delete", "remove"):
         word_to_remove = input(
             "Enter new 5 letter word to delete from the wordle list: "
         ).lower()
         wordle_list.remove_word_from_wordle_list(word_to_remove)
-    elif response == "remove":
-        word_to_remove = input(
-            "Enter new 5 letter word to remove from the wordle list: "
-        ).lower()
-        wordle_list.remove_word_from_wordle_list(word_to_remove)
+    elif response in ("quit", "exit"):
+        sys.exit()
     elif len(response) != 5:
         print("You must enter a 5 letter word")
     else:
         check_word(response, wordle_word)
 
 
-def check_word(word_to_check, wordle_word):
+def check_word(word_to_check: str, wordle_word: str) -> None:
+    """
+    Checks each letter of the word_to_check is in the wordle_word.
+    - If the letter is in the wordle_word and in the correct location,
+    the letter will be printed to the screen in a green color.
+    - If the letter is in the wordle_word but in the wrong location,
+    the letter will be printed to the screen in a yellow color.
+    - If the letter is not in the wordle_word, the letter will be
+    printed to the screen in a red color.
+
+
+    paramters:
+    word_to_check as str,
+    wordle_word as str
+
+    return: None
+    """
+
     for i in range(5):
         if word_to_check[i] == wordle_word[i]:
             print(f"{Fore.GREEN}{word_to_check[i]}, end=''")
@@ -67,6 +108,14 @@ def check_word(word_to_check, wordle_word):
 
 
 def print_header():
+    """
+    Prints a welcome header for the game to the screen
+
+    parameters: None
+
+    return: None
+    """
+
     print()
     print(f"{Fore.BLUE}---------------------------------")
     print(f"{Fore.BLUE}      Welcome to wordle")
@@ -75,11 +124,28 @@ def print_header():
     print()
 
 
-def print_instructions():
+def print_instructions() -> None:
+    """
+    Prints the instructions to the screen
+
+    parameters: None
+
+    return: None
+    """
+
     pass
 
 
-def play_game(wordle_word):
+def play_game(wordle_word: str) -> None:
+    """
+    Plays the game until the answer is correct or you reach the maximum number of guesses
+
+    parameters:
+    wordle_word as str
+
+    return: None
+    """
+
     print(f"Your word is {Fore.GREEN}{wordle_word[0]}{Fore.BLUE}____")
     count = 0
     while count in range(MAX_GUESSES):
@@ -87,13 +153,22 @@ def play_game(wordle_word):
         check_response(word_guess, wordle_word)
 
 
-def main():
+def main() -> None:
+    """
+    Main Function
+
+    parameters: None
+
+    return: None
+    """
+
     print_header()
     print_instructions()
     wordle_word = choose_a_word_from_wordle_list()
     print(f"{Fore.GREEN}{wordle_word[0]}{Fore.BLUE}____")
     while True:
         play_game(wordle_word)
+
 
 # Ask the user to guess a word
 # Convert the response to lowercase
@@ -104,3 +179,7 @@ def main():
 # the color of the letter to red.
 # Replace the '_' spaces with the correct letters in their respective
 # colors
+
+
+if __name__ == "__main__":
+    main()
