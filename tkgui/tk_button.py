@@ -1,3 +1,7 @@
+"""
+Sample button training for tkgui
+"""
+
 from tkinter import *
 
 root = Tk()

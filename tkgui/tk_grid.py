@@ -1,3 +1,7 @@
+"""
+Sample grid training for tkgui
+"""
+
 from tkinter import *
 
 root = Tk()

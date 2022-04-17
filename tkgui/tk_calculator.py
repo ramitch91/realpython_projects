@@ -1,3 +1,6 @@
+"""
+Sample training file for tkgui
+"""
 from tkinter import *
 
 root = Tk()
@@ -5,8 +8,8 @@ root.title("Simple Calculator")
 
 e = Entry(root, width=35, borderwidth=5)
 e.grid(row=0, columnspan=3, padx=10, pady=10)
-# f_num = 0
-# operation = ""
+f_num = 0
+operation = ""
 
 
 def enter_number(number: int) -> None:
