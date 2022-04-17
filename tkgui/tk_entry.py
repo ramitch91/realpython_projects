@@ -7,7 +7,15 @@ e.pack()
 e.insert(0, "Enter your name: ")
 
 
-def my_click():
+def my_click() -> None:
+    """
+    Runs code after button is clicke
+
+    parameters: None
+
+    return: None
+    """
+
     hello = "Hello " + e.get()
     my_label = Label(root, text=hello)
     my_label.pack()

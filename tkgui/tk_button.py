@@ -3,7 +3,15 @@ from tkinter import *
 root = Tk()
 
 
-def my_click():
+def my_click() -> None:
+    """
+    Runs code after button is clicked
+
+    parameters: None
+
+    returns: None
+    """
+
     my_label = Label(root, text="I clicked a button")
     my_label.pack()
 
