@@ -11,12 +11,20 @@ NUM_DIGITS = 3  # (!) Try setting this to 1 or 10.
 MAX_GUESSES = 10  # (!) Try setting this to 1 or 100
 
 
-def main():
+def main() -> None:
+    """
+    Main module
+
+    parameters: None
+
+    return: None
+    """
+
     print(
-        """Bagels, a deductive logic game, by Al Sweigart al@inventwithpython.com
+        f"""Bagels, a deductive logic game, by Al Sweigart al@inventwithpython.com
     (typed and modified by Ricky Mitchell)
 
-    I am thinking of a {}-digit number with no repeated digits.
+    I am thinking of a {NUM_DIGITS}-digit number with no repeated digits.
     Try to guess what it is. Here are some clues:
     When I say:     That means:
         Pico        One digit is correct but in the wrong position.
@@ -24,9 +32,7 @@ def main():
         Bagels      No digit is correct.
 
     For example, if the secret number was 248 and your guess was 843, the
-    clues would be Fermi Pico.""".format(
-            NUM_DIGITS
-        )
+    clues would be Fermi Pico."""
     )
 
     while True:  # Main game loop.
@@ -60,8 +66,15 @@ def main():
     print("Thanks for playing!")
 
 
-def get_secret_num():
-    """Returns a string made up of NUM_DIGITS unique random digits."""
+def get_secret_num() -> str:
+    """
+    Returns a string made up of NUM_DIGITS unique random digits.
+
+    parameters: None
+
+    return: secret_num as str
+    """
+
     numbers = list("0123456789")  # Create a list of digits 0 to 9.
     random.shuffle(numbers)  # Shuffle the numbers into a random order.
 
@@ -72,15 +85,24 @@ def get_secret_num():
     return secret_num
 
 
-def get_clues(guess, secret_num):
-    """Returns a string with the Pico, Fermi, Bagels clues for a guess
-    and secret number pair."""
+def get_clues(guess: str, secret_num: str) -> list:
+    """
+    Returns a string with the Pico, Fermi, Bagels clues for a guess
+    and secret number pair.
+
+    parameters:
+    guess as str,
+    secret_num as str
+
+    return: clues as list
+    """
+
     if guess == secret_num:
         return "You got it!"
 
     clues = []
 
-    for i in range(len(guess)):
+    for i in enumerate(guess):
         if guess[i] == secret_num[i]:
             # A correct digit is in the correct place.
             clues.append("Fermi")
@@ -88,13 +110,14 @@ def get_clues(guess, secret_num):
             # A correct digit is in the incorrect place.
             clues.append("Pico")
     if len(clues) == 0:
-        return "Bagels"  # There are no correct digits at all.
-    else:
-        # Sort the clues into alphabetical order so their  original order
-        # doesn't give information away.
-        clues.sort()
-        # Make a single string from the list of string clues.
-        return " ".join(clues)
+        clues.append("Bagels")  # There are no correct digits at all.
+        return clues
+
+    # Sort the clues into alphabetical order so their  original order
+    # doesn't give information away.
+    clues.sort()
+    # Make a single string from the list of string clues.
+    return " ".join(clues)
 
 
 # If the program is run (instead of imported), run the game:
