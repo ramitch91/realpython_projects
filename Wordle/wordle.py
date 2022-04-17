@@ -45,6 +45,7 @@ def choose_a_word_from_wordle_list() -> str:
     return wordle_word
 
 
+<<<<<<< HEAD:Wordle/wordle.py
 def check_response(response: str, wordle_word: str) -> None:
     """
     Checks response from user input to determine what action to take:
@@ -72,6 +73,17 @@ def check_response(response: str, wordle_word: str) -> None:
         wordle_list.remove_word_from_wordle_list(word_to_remove)
     elif response in ("quit", "exit"):
         sys.exit()
+=======
+def check_response(response, wordle_word):
+    if response == 'quit' or response == 'exit':
+        exit(0)
+    elif response == "add":
+        word_to_add = input("Enter new 5 letter word to add to wordle list: ").lower()
+        wordle_list.add_word_to_wordle_list(word_to_add)
+    elif response == "delete":
+        word_to_remove = input("Enter new 5 letter word to delete from the wordle list: ").lower()
+        wordle_list.remove_word_from_wordle_list(word_to_remove)
+>>>>>>> a62872ad102cfbbe6927e328a91f951445402450:Big_Book_Small_Python_Projects/Wordle/wordle.py
     elif len(response) != 5:
         print("You must enter a 5 letter word")
     else:
@@ -98,11 +110,11 @@ def check_word(word_to_check: str, wordle_word: str) -> None:
 
     for i in range(5):
         if word_to_check[i] == wordle_word[i]:
-            print(f"{Fore.GREEN}{word_to_check[i]}, end=''")
+            print(f"{Fore.GREEN}{word_to_check[i]}", end=' ')
         elif word_to_check[i] in wordle_word:
-            print(f"{Fore.YELLOW}{word_to_check[i]}, end=''")
+            print(f"{Fore.YELLOW}{word_to_check[i]}", end=' ')
         else:
-            print(f"{Fore.RED}{word_to_check[i]}, end=''")
+            print(f"{Fore.RED}{word_to_check[i]}", end=' ')
 
     print()
 
@@ -124,6 +136,7 @@ def print_header():
     print()
 
 
+<<<<<<< HEAD:Wordle/wordle.py
 def print_instructions() -> None:
     """
     Prints the instructions to the screen
@@ -147,10 +160,45 @@ def play_game(wordle_word: str) -> None:
     """
 
     print(f"Your word is {Fore.GREEN}{wordle_word[0]}{Fore.BLUE}____")
+=======
+def print_instructions():
+    print(f'A correct letter in the correct place will show up as {Fore.GREEN}GREEN')
+    print(f'A correct letter in the wrong place will show up as {Fore.YELLOW}YELLOW')
+    print(f'An incorrect letter will show up as {Fore.RED}RED')
+    print()
+    print(f'To add a new word to the wordle list type {Fore.CYAN}add')
+    print(f'To delete a word from the wordle list type {Fore.CYAN}delete')
+    print(f'To exit the game early, type {Fore.CYAN}quit or exit')
+    print()
+
+
+def play_game(wordle_word):
+    print(f"Your word is {Fore.BLUE}_____")
+>>>>>>> a62872ad102cfbbe6927e328a91f951445402450:Big_Book_Small_Python_Projects/Wordle/wordle.py
     count = 0
     while count in range(MAX_GUESSES):
         word_guess = input("Enter your word guess: ").lower()
+        # if word_guess == "add":
+        #     word_to_add = input('What word would you like to add to the wordle list? ').lower()
+        #     if len(word_to_add) != 5:
+        #         print(f'{word_to_add} is not a 5-letter word.  You must enter a 5-letter word.')
+        #         break
+        #     else:
+        #         wordle_list.add_word_to_wordle_list(word_to_add)
+        #         break
+        # elif word_guess == 'delete':
+        #     word_to_delete = input('What word would you like to delete from the wordle list? ').lower()
+        #     wordle_list.remove_word_from_wordle_list(word_to_delete)
+        #
         check_response(word_guess, wordle_word)
+        if word_guess == wordle_word:
+            print(f"Congratulations, you guessed the word in {count + 1} tries!")
+            break
+        elif count == 5:
+            print(f"Sorry, the word was {Fore.BLUE}{wordle_word.upper()}. {Fore.WHITE}Better luck next time")
+            break
+        else:
+            count += 1
 
 
 def main() -> None:
@@ -165,10 +213,16 @@ def main() -> None:
     print_header()
     print_instructions()
     wordle_word = choose_a_word_from_wordle_list()
-    print(f"{Fore.GREEN}{wordle_word[0]}{Fore.BLUE}____")
     while True:
         play_game(wordle_word)
+        answer = input("Would you like to play again? ").lower()
+        if answer[0] == 'y':
+            continue
+        else:
+            break
 
+
+<<<<<<< HEAD:Wordle/wordle.py
 
 # Ask the user to guess a word
 # Convert the response to lowercase
@@ -182,4 +236,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+=======
+if __name__ == '__main__':
+>>>>>>> a62872ad102cfbbe6927e328a91f951445402450:Big_Book_Small_Python_Projects/Wordle/wordle.py
     main()
